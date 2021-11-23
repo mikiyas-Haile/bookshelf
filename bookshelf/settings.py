@@ -1,5 +1,7 @@
 from pathlib import Path
-
+import django_heroku
+import dj_database_url
+import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-etc5*r$g@4wchswuuyg^so^$!(b-*ae)j&m$dv$2%zma%$$q7^'
 
@@ -9,6 +11,7 @@ ALLOWED_HOSTS = []
 
 BOOK_ACTIONS = ['create', 'like', 'unlike', 'reply']
 INSTALLED_APPS = [
+     'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -24,6 +27,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,8 +92,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+DISABLE_COLLECTSTATIC = 1
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_ROOT = os.path.join(BASE_DIR / 'static-root')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -117,3 +133,4 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
     'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }
+django_heroku.settings(locals())

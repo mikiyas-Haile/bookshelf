@@ -7,6 +7,11 @@ name = "pypi"
 django = "*"
 django-rest-framework = "*"
 django-rest-knox = "*"
+django-heroku = "*"
+gunicorn = "*"
+pillow = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
