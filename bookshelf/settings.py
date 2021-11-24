@@ -2,6 +2,7 @@ from pathlib import Path
 import django_heroku
 import dj_database_url
 import os
+from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-etc5*r$g@4wchswuuyg^so^$!(b-*ae)j&m$dv$2%zma%$$q7^'
 
@@ -101,9 +102,9 @@ STATICFILES_DIRS = (
 )
 
 
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_ROOT = os.path.join(BASE_DIR / 'static-root')
 

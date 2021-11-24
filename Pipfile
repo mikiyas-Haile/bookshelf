@@ -12,6 +12,7 @@ gunicorn = "*"
 pillow = "*"
 whitenoise = "*"
 dj-database-url = "*"
+python-decouple = "*"
 
 [dev-packages]
 
