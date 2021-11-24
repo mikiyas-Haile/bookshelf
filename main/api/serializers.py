@@ -22,12 +22,13 @@ class BookSerializer(serializers.ModelSerializer):
 	likes = serializers.SerializerMethodField(read_only=True)
 	has_liked = serializers.SerializerMethodField(read_only=True)
 	is_me = serializers.SerializerMethodField(read_only=True)
+	comments = serializers.SerializerMethodField(read_only=True)
 	# parent = StatusCreateSerializer(read_only=True)
 	# img = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Book
-		fields = ['is_me','has_liked','author','id', 'body',  'title', 'discription', 'likes', 'date_added','date_updated']
+		fields = ['comments','is_me','has_liked','author','id', 'body',  'title', 'discription', 'likes', 'date_added','date_updated']
 
 	def update(self, instance, validated_data):
 		# Update the Foo instance
@@ -35,7 +36,9 @@ class BookSerializer(serializers.ModelSerializer):
 		instance.save()
 		return instance
 
-
+	def get_comments(self, obj):
+		comments = obj.comments.all().count()
+		return comments
 	def get_is_me(self, obj):
 		is_me = False
 		context = self.context

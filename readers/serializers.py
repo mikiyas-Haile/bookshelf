@@ -4,7 +4,7 @@ from .models import UserProfile
 from main.models import Book
 class PublicProfileSerializer(serializers.ModelSerializer):
     verified = serializers.SerializerMethodField(read_only=True)
-    posts = serializers.SerializerMethodField(read_only=True)
+    books = serializers.SerializerMethodField(read_only=True)
     birthday = serializers.SerializerMethodField(read_only=True)
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
@@ -18,7 +18,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = [
-            'posts',
+            'books',
             'verified',
             'birthday',
             'id',
@@ -61,7 +61,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
             pass
         instance.save()
         return instance
-    def get_posts(self, obj):
+    def get_books(self, obj):
         qs = Book.objects.filter(author__username=obj.user.username)
         return qs.count()
     def get_is_my_profile(self, obj):

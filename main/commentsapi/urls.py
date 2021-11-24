@@ -5,9 +5,9 @@ from django.views.generic import TemplateView
 
 from .views import (
     CommentListView,
-    BookActionView,
+    BookCommentActionView,
 )
 urlpatterns = [
     path('<int:book_pk>/comments', CommentListView),
-    path('<int:book_pk>/action', BookActionView),
+    path('<int:book_pk>/action', BookCommentActionView),
 ]

@@ -18,7 +18,7 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def BookActionView(request,book_pk, *args, **kwargs):
+def BookCommentActionView(request,book_pk, *args, **kwargs):
     serializer = BookCommentActionSerializer(data=request.data, context={"request":request})
     if serializer.is_valid(raise_exception=True):
         data = serializer.data
