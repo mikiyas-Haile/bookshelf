@@ -14,6 +14,12 @@ from .serializers import BookSerializer,BookActionSerializer
 
 from main.models import Book
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
+import django.middleware.csrf 
+
+@api_view(["GET"])
+def django_csrf(request, *args, **kwargs):
+    token = django.middleware.csrf.get_token(request)
+    return Response({"csrf": token})
 
 class BookListView(generics.ListCreateAPIView):
     search_fields = ['author__username', 'author__first_name', 'author__last_name']
