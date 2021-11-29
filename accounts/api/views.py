@@ -3,13 +3,30 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from knox.models import AuthToken, User
 from rest_framework.serializers import Serializer
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, ChangePasswordSerializer
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from django.views.decorators.csrf import csrf_exempt
+
+
+from rest_framework.generics import UpdateAPIView
+
+
+class ChangePasswordView(UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        user_serializer = UserSerializer(user)
+        return Response(user_serializer.data, status=200)
+
+
+
 class RegisterApi(generics.GenericAPIView):
     serializer_class = RegisterSerializer
     @csrf_exempt
