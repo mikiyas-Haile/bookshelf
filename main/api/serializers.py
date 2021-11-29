@@ -24,12 +24,16 @@ class BookSerializer(serializers.ModelSerializer):
 	is_me = serializers.SerializerMethodField(read_only=True)
 	comments = serializers.SerializerMethodField(read_only=True)
 	# parent = StatusCreateSerializer(read_only=True)
-	# img = serializers.SerializerMethodField()
+	thumbnail = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Book
-		fields = ['comments','is_me','has_liked','author','id', 'body',  'title', 'discription', 'likes', 'date_added','date_updated']
-
+		fields = ['comments','is_me','thumbnail','has_liked','author','id', 'body',  'title', 'discription', 'likes', 'date_added','date_updated']
+	def get_thumbnail(self, obj):
+		try:
+			return obj.thumbnail.url
+		except ValueError:
+			return '/media/images/default_book.png'
 	def update(self, instance, validated_data):
 		# Update the Foo instance
 		instance.body = validated_data['body']

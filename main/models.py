@@ -4,6 +4,7 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 class Book(models.Model):
+    thumbnail = models.ImageField(null=True, blank=True, upload_to="images/")
     title = models.CharField(max_length=40)
     body = models.TextField()
     # cover_img = models.ImageField()
@@ -28,6 +29,7 @@ class Comment(models.Model):
     body = models.TextField(max_length=200)
     likes = models.ManyToManyField(User, blank=True,related_name="comment_likes")
     date_added = models.DateTimeField(auto_now_add=True)
+    img = models.ImageField(null=True, blank=True, upload_to="images/")
     date_updated = models.DateTimeField(auto_now=True)
     def liked(self):
         return self.likes.all()
