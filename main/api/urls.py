@@ -7,6 +7,7 @@ from .views import (
     BookListView,
     BookActionView,
     BookDetailView,
+    UserBooksAPIView,
     django_csrf,
 )
 urlpatterns = [
@@ -14,4 +15,5 @@ urlpatterns = [
     path('', BookListView.as_view()),
     path('action', BookActionView),
     path('<int:book_id>', BookDetailView),
+    path("<str:username>/books", UserBooksAPIView)
 ]

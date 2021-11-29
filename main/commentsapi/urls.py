@@ -6,8 +6,10 @@ from django.views.generic import TemplateView
 from .views import (
     CommentListView,
     BookCommentActionView,
+    UserCommentsAPIView,
 )
 urlpatterns = [
     path('<int:book_pk>/comments', CommentListView),
     path('<int:book_pk>/action', BookCommentActionView),
+    path('<str:username>/comments', UserCommentsAPIView),
 ]

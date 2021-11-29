@@ -15,6 +15,12 @@ from .serializers import BookCommentsSerializer, BookCommentActionSerializer
 from main.models import Book, Comment
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
+@api_view(["GET"])
+def UserCommentsAPIView(request,username, *args, **kwargs):
+    qs = Comment.objects.filter(author__username=username).annotate(num_likess=Count('likes')).order_by('-num_likess')
+    serializer = BookCommentsSerializer(qs, many=True, context={"request":request})
+    return Response(serializer.data, 200)
+
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])

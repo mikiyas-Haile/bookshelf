@@ -17,6 +17,12 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 import django.middleware.csrf 
 
 @api_view(["GET"])
+def UserBooksAPIView(request,username, *args, **kwargs):
+    qs = Book.objects.filter(author__username=username).annotate(num_likess=Count('likes')).order_by('-num_likess')
+    serializer = BookSerializer(qs, many=True, context={"request":request})
+    return Response(serializer.data, 200)
+
+@api_view(["GET"])
 def django_csrf(request, *args, **kwargs):
     token = django.middleware.csrf.get_token(request)
     return Response({"csrf": token})
