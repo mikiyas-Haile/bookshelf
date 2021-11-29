@@ -12,7 +12,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField(read_only=True)
     follower_count = serializers.SerializerMethodField(read_only=True)
     following_count = serializers.SerializerMethodField(read_only=True)
-    # pfp_url = serializers.SerializerMethodField()
+    pfp_url = serializers.SerializerMethodField()
     is_my_profile = serializers.SerializerMethodField(read_only=True)
     request_user = serializers.SerializerMethodField(read_only=True)
     class Meta:
@@ -25,7 +25,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
-            # 'pfp_url',
+            'pfp_url',
             'bio',
             'insta',
             'twitter',
@@ -86,11 +86,11 @@ class PublicProfileSerializer(serializers.ModelSerializer):
             is_following = user in  obj.followers.all()
         return is_following
 
-    # def get_pfp_url(self, obj):
-    #     try:
-    #         return obj.user.userprofile.pfp.url
-    #     except ValueError:
-    #         return '/media/images/default-pfp_C7ckHUn.png'
+    def get_pfp_url(self, obj):
+        try:
+            return obj.user.userprofile.pfp.url
+        except ValueError:
+            return '/media/images/default_avatar.jpg'
     def get_birthday(self, obj):
         return obj.user.userprofile.birthday
     def get_first_name(self, obj):

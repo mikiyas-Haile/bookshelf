@@ -17,7 +17,7 @@ class UserProfile(models.Model):
     updated = models.DateTimeField(auto_now=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     bio = models.CharField(max_length=300, null=True, blank=True)
-    # pfp = models.ImageField(null=True, blank=True, upload_to="./images/profiles")
+    pfp = models.ImageField(null=True, blank=True, upload_to="./images/profiles")
     insta = models.CharField(max_length=255, null=True, blank=True)
     facebook = models.CharField(max_length=255, null=True, blank=True)
     twitter = models.CharField(max_length=255, null=True, blank=True)
